@@ -44,14 +44,14 @@ impl MyCircle{
         *refresh_duration = Duration::new(3, 0);
         
         if side {
-            velocity.x = 2.0;
-            velocity.y = 2.0;
+            velocity.x = 3.0;
+            velocity.y = 0.0;
             return "Player 1 scored!".to_string();
     
             
         } else {
-            velocity.x = -2.0;
-            velocity.y = -2.0;
+            velocity.x = -3.0;
+            velocity.y = 0.0;
             return "Player 2 scored!".to_string();
     
         }
@@ -77,14 +77,23 @@ impl MyCircle{
             audio::play_sound_once(hit);
     
         }
-        if touching_bar1_from_sides || touching_bar2_from_sides {
+        if touching_bar1_from_sides {
             velocity.x = -velocity.x; 
-            if velocity.x.abs() < 10.0 || velocity.y.abs() < 10.0 {
-                velocity.x *= 1.03;
-                velocity.y *= 1.03; 
-            }    
+            let bar_center = bar1.y + bar1.h / 2.0;
+            let offset = (self.y - bar_center) / (bar1.h / 2.0); 
+            velocity.y += offset * 5.0;
+
             audio::play_sound_once(hit);
-    
+        }
+
+        if touching_bar2_from_sides {
+            velocity.x = -velocity.x; 
+
+            let bar_center = bar2.y + bar2.h / 2.0;
+            let offset = (self.y - bar_center) / (bar2.h / 2.0); 
+            velocity.y += offset * 5.0; 
+
+            audio::play_sound_once(hit);
         }
     
         self.x += velocity.x;

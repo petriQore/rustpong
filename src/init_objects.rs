@@ -42,8 +42,8 @@ pub fn init_objects() -> Objects {
     };
 
     let v = Velocity{
-        x: -3.0,
-        y: 3.0 
+        x: -5.0,
+        y: 0.0 
     };
 
     Objects {
