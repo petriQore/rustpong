@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Game</title>
+    <title>Pong</title>
     <link rel="icon" href="favicon.svg" />
 
     <style>
@@ -25,7 +25,12 @@
     <canvas id="glcanvas" tabindex='1'></canvas>
     <!-- Minified and statically hosted version of https://github.com/not-fl3/macroquad/blob/master/js/mq_js_bundle.js -->
     <script src="https://not-fl3.github.io/miniquad-samples/mq_js_bundle.js"></script>
-    <script>load("game.wasm");</script> 
+    <script>load("game.wasm");
+
+document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        }, false);
+</script> 
 
 </body>
 </html>
