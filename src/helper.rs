@@ -36,12 +36,12 @@ impl MyCircle{
         }
     }
 
-    pub fn reset_ball_place(&mut self, velocity: &mut Velocity,  side: bool, game_state_paused: &mut bool, pause_duration: &mut Duration) -> String {
+    pub fn reset_ball_place(&mut self, velocity: &mut Velocity,  side: bool, game_state_refreshing: &mut bool, refresh_duration: &mut Duration) -> String {
         self.x = screen_width()/2.0;
         self.y = screen_height()/2.0;
     
-        *game_state_paused = true;
-        *pause_duration = Duration::new(3, 0);
+        *game_state_refreshing = true;
+        *refresh_duration = Duration::new(3, 0);
         
         if side {
             velocity.x = 2.0;
@@ -57,9 +57,9 @@ impl MyCircle{
         }
     }
 
-    pub fn bounce(&mut self, bar1: &MyRectangle, bar2: &MyRectangle, velocity: &mut Velocity, game_state_paused: &mut bool, pause_duration: &mut Duration, sound: &Sound, hit: &Sound) -> String {
-        println!("{}",velocity.x);
-        println!("{}",velocity.y);
+    pub fn bounce(&mut self, bar1: &MyRectangle, bar2: &MyRectangle, velocity: &mut Velocity, game_state_refreshing: &mut bool, refresh_duration: &mut Duration, sound: &Sound, hit: &Sound, player1_score: &mut i32, player2_score: &mut i32) -> String {
+        // println!("{}",velocity.x);
+        // println!("{}",velocity.y);
         let mut scoring_message = String::new(); 
     
         let touching_bar1_from_sides =  self.x-self.r <= bar1.x+bar1.w && self.y-self.r <= bar1.y+bar1.h && self.y+self.r >= bar1.y;
@@ -94,13 +94,15 @@ impl MyCircle{
     
         if self.x - self.r <= 0.0 {
             audio::play_sound_once(sound);
-            scoring_message = self.reset_ball_place( velocity, false, game_state_paused, pause_duration);
+            scoring_message = self.reset_ball_place( velocity, false, game_state_refreshing, refresh_duration);
+            *player2_score += 1;
     
         };
     
         if self.x + self.r >= screen_width() {
             audio::play_sound_once(sound);
-            scoring_message = self.reset_ball_place(velocity, true, game_state_paused, pause_duration);
+            scoring_message = self.reset_ball_place(velocity, true, game_state_refreshing, refresh_duration);
+            *player1_score += 1;
         };
     
         return scoring_message;
