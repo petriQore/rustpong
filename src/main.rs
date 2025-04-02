@@ -15,6 +15,7 @@ mod init_objects;
 use init_objects::*;
 
 enum GameState {
+    MainMenu,
     Playing,
     Paused,
 }
@@ -31,7 +32,7 @@ fn window_conf() -> Conf {
 
 #[macroquad::main(window_conf)]
 async fn main() {
-    let mut game_state = GameState::Playing;
+    let mut game_state = GameState::MainMenu;
     set_fullscreen(true);
     // next_frame().await;
 
@@ -127,6 +128,17 @@ async fn main() {
                 bar2.custom_draw_rect();
                 midfield.custom_draw_rect();
                 ball.custom_draw_circle();
+            }
+            GameState::MainMenu => {
+                let text = "Main Menu";
+                let text_dimensions = measure_text(text, None, 50, 1.0);
+                draw_text(
+                    text,
+                    screen_width() / 2.0 - text_dimensions.width / 2.0,
+                    screen_height() / 4.0,
+                    50.0,
+                    RED,
+                );
             }
         }
         

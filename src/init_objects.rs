@@ -20,7 +20,7 @@ pub fn init_objects() -> Objects {
     let bar1 = MyRectangle{
         x: -5.0, // temporary fix for top collision
         y: screen_height()/2.0,
-        w: 10.0,
+        w: 15.0,
         h: 150.0,
         clr: WHITE 
     };
@@ -28,7 +28,7 @@ pub fn init_objects() -> Objects {
     let bar2 = MyRectangle{
         x: screen_width() - bar1.w + 5.0,
         y: screen_height()/2.0,
-        w: 10.0,
+        w: 15.0,
         h: 150.0,
         clr: WHITE 
     };
@@ -42,8 +42,8 @@ pub fn init_objects() -> Objects {
     };
 
     let v = Velocity{
-        x: -2.0,
-        y: 2.0 
+        x: -3.0,
+        y: 3.0 
     };
 
     Objects {

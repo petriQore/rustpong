@@ -42,7 +42,7 @@ impl MyCircle{
     
         *game_state_paused = true;
         *pause_duration = Duration::new(3, 0);
-    
+        
         if side {
             velocity.x = 2.0;
             velocity.y = 2.0;
@@ -58,7 +58,8 @@ impl MyCircle{
     }
 
     pub fn bounce(&mut self, bar1: &MyRectangle, bar2: &MyRectangle, velocity: &mut Velocity, game_state_paused: &mut bool, pause_duration: &mut Duration, sound: &Sound, hit: &Sound) -> String {
-
+        println!("{}",velocity.x);
+        println!("{}",velocity.y);
         let mut scoring_message = String::new(); 
     
         let touching_bar1_from_sides =  self.x-self.r <= bar1.x+bar1.w && self.y-self.r <= bar1.y+bar1.h && self.y+self.r >= bar1.y;
@@ -68,14 +69,20 @@ impl MyCircle{
         let touching_bar_from_tops = self.x-self.r < bar1.x+bar1.w && (self.y-self.r == bar1.y+bar1.h || self.y+self.r == bar1.y); 
     
         if self.y - self.r <= 0.0 || self.y + self.r >= screen_height() || touching_bar_from_tops {
+            if velocity.x.abs() < 10.0 || velocity.y.abs() < 10.0 {
+                velocity.x *= 1.03;
+                velocity.y *= 1.03; 
+            } 
             velocity.y = -velocity.y;
             audio::play_sound_once(hit);
     
         }
         if touching_bar1_from_sides || touching_bar2_from_sides {
             velocity.x = -velocity.x; 
-            velocity.x *= 1.4;
-            velocity.y *= 1.4; 
+            if velocity.x.abs() < 10.0 || velocity.y.abs() < 10.0 {
+                velocity.x *= 1.03;
+                velocity.y *= 1.03; 
+            }    
             audio::play_sound_once(hit);
     
         }
