@@ -74,16 +74,16 @@ impl MyCircle{
         }
         if touching_bar1_from_sides || touching_bar2_from_sides {
             velocity.x = -velocity.x; 
-            velocity.x *= 1.1;
-            velocity.y *= 1.1; 
+            velocity.x *= 1.4;
+            velocity.y *= 1.4; 
             audio::play_sound_once(hit);
     
         }
     
         self.x += velocity.x;
         self.y += velocity.y;
-        velocity.x += 0.001;
-        velocity.y += 0.001; 
+        // velocity.x += 0.001;
+        // velocity.y += 0.001; 
     
         if self.x - self.r <= 0.0 {
             audio::play_sound_once(sound);
